@@ -1,14 +1,19 @@
 from fastapi import FastAPI
+from app.core.database import Base, engine
+from app.api.documents import router as document_router
 from app.api.routes import router as conversion_router
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Markdown to PDF System",
     description="Hệ thống chuyển đổi Markdown sang PDF",
-    version="1.0.0"
+    version="2.0.0"
 )
 
-# Prefix "/api/v1" giúp quản lý phiên bản API dễ dàng hơn
-app.include_router(conversion_router, prefix="/api/v1", tags=["Conversion"])
+app.include_router(conversion_router, prefix="/api/v1/tools", tags=["Tools"])
+
+app.include_router(document_router, prefix="/api/v1/documents", tags=["Documents"])
 
 @app.get("/")
 async def root():

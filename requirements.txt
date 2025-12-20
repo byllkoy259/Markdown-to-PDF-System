@@ -8,3 +8,7 @@ requests
 latex2mathml
 matplotlib
 python-multipart
+sqlalchemy
+psycopg2-binary
+minio
+python-dotenv
