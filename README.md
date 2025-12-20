@@ -14,7 +14,8 @@ Xây dựng một API service backend chuyên nghiệp để thực hiện các 
 - **Framework:** FastAPI
 - **Database:** PostgreSQL (Driver: `psycopg2-binary`, ORM: `SQLAlchemy`)
 - **Object Storage:** MinIO (S3 Compatible)
-- **PDF Processing:** - `WeasyPrint` (Tạo PDF từ HTML)
+- **PDF Processing:** 
+  - `WeasyPrint` (Tạo PDF từ HTML)
   - `pypdf` (Xử lý, cắt ghép file PDF)
 - **Markdown Processing:** `mistune` (Parse Markdown sang HTML)
 - **Infrastructure:** Docker & Docker Compose
