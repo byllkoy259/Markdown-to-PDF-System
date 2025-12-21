@@ -92,6 +92,6 @@ Xây dựng một API service backend chuyên nghiệp để thực hiện các 
     ```
     API sẽ có tại `http://127.0.0.1:8000` và tài liệu Swagger UI tại `http://127.0.0.1:8000/docs#`.
 
-## 4. Người hướng dẫn
+## 5. Người hướng dẫn
 
 **Mentor:** Phạm Tiến Thành (VNPT-IT)
