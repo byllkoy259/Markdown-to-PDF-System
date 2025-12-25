@@ -1,4 +1,29 @@
-.env
+# --- Python Core ---
 __pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtual Environments ---
 venv/
+env/
+.venv/
+
+# --- Environment Variables ---
+.env
+.env.local
+!.env.example
+
+# --- File kết quả đầu ra ---
 *.pdf
+*.log
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+
+# --- Operating System ---
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+docker-compose.override.yml
