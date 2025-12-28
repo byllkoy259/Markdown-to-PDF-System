@@ -1,10 +1,23 @@
 version: '3.8'
 services:
+  traefik:
+    image: traefik:v3.0
+    container_name: gateway_traefik
+    command:
+      - "--api.insecure=true" # Bật Dashboard quản lý (cổng 8080)
+      - "--providers.docker=true" # Bật chế độ lắng nghe Docker
+      - "--providers.docker.exposedbydefault=false" # Chỉ định dịch vụ nào được Traefik quản lý
+      - "--entrypoints.web.address=:80" # Định nghĩa entrypoint cho HTTP
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   backend:
     build: .
     container_name: markdown_backend
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
     depends_on:
       - db
       - minio
@@ -21,6 +34,11 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`127.0.0.1.nip.io`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
 
   db:
     image: postgres:15
@@ -29,8 +47,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "${DB_PORT}:5432"
+    # ports:
+    #   - "${DB_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -41,11 +59,16 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-    ports:
-      - "9000:9000"
-      - "9001:9001"
+    # ports:
+    #   - "9000:9000"
+    #   - "9001:9001"
     volumes:
       - minio_data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio-ui.rule=Host(`minio.127.0.0.1.nip.io`)"
+      - "traefik.http.routers.minio-ui.entrypoints=web"
+      - "traefik.http.services.minio-ui.loadbalancer.server.port=9001"
 
 volumes:
   postgres_data:
