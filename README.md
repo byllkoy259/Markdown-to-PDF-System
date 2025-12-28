@@ -46,15 +46,15 @@ Dự án được chia thành 3 nhánh để demo các giải pháp hạ tầng 
     ```
 
 ### Bước 2: Clone repository
-    ```bash
-    git clone <your-repository-url>
-    cd <repository-name>
-    ```
+```bash
+git clone <your-repository-url>
+cd <repository-name>
+```
 
-### Bước 2: Cấu hình biến môi trường
-    ```bash
-    cp .env.example .env
-    ```
+### Bước 3: Cấu hình biến môi trường
+```bash
+cp .env.example .env
+```
 
 ## 5. Hướng dẫn chạy từng nhánh
 
